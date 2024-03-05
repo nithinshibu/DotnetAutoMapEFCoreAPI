@@ -1,4 +1,13 @@
 ﻿Thanks to DevEmpower https://www.youtube.com/watch?v=MxDZYWhgkx8
 
+Dependencies:-
 
+Microsoft.EntityFrameworkCore.SqlServer
+Microsoft.EntityFrameworkCore.Tools
+AutoMapper.Extensions.Microsoft.DependencyInjection (deprecated)
+AutoMapper (Install this instead)
 
+Commands:-
+
+add-migration <migration-name>
+update-database
