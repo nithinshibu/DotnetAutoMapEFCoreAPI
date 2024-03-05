@@ -46,17 +46,42 @@ namespace DotnetAutoMapEFCoreAPI.Controllers
             return Ok("Ticket Created Successfully");
         }
 
+        //[HttpGet]
+        //[Route("GetAllTickets")]
+
+        //public async Task<ActionResult<IEnumerable<GetTicketDto>>> GetAllTickets()
+        //{
+        //    //Get Tickets from the context
+        //    var tickets = await _dbContext.Tickets.ToListAsync();
+        //    //using auto mapper we are only fetching the required details
+        //    var requiredTicketDetails = _mapper.Map<IEnumerable<GetTicketDto>>(tickets);
+        //    return Ok(requiredTicketDetails);
+        //}
+
+        //Handle the Search functionality
+
         [HttpGet]
         [Route("GetAllTickets")]
 
-        public async Task<ActionResult<IEnumerable<GetTicketDto>>> GetAllTickets()
+        public async Task<ActionResult<IEnumerable<GetTicketDto>>> GetAllTickets(string? q)
         {
-            //Get Tickets from the context
-            var tickets = await _dbContext.Tickets.ToListAsync();
-            //using auto mapper we are only fetching the required details
+
+            //Check if we have the search parameter or not
+            IQueryable<Ticket> query = _dbContext.Tickets;
+
+            if(q is not null)
+            {
+                query = query.Where(t => t.PassengerName.Contains(q));
+            }
+
+            var tickets = await query.ToListAsync();
+
             var requiredTicketDetails = _mapper.Map<IEnumerable<GetTicketDto>>(tickets);
+
             return Ok(requiredTicketDetails);
+
         }
+
         [HttpGet]
         [Route("GetTicketById/{id}")]
 
